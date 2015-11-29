@@ -264,20 +264,20 @@ void SearchVmFunctions(void) {
 	// the module is mapped, so I think this is fine. If it ever breaks, it'll
 	// be trivial to fix.
 	G_AddEvent = (G_AddEvent_ptr)PatternSearch((void*)((pint)qagame + 0xB000), 0xB0000, PTRN_G_ADDEVENT, MASK_G_ADDEVENT);
-/*
-if (G_AddEvent == NULL) {
+
+	if (G_AddEvent == NULL) {
 		DebugPrint("ERROR: Unable to find G_AddEvent.\n");
 		failed = 1;
 	}
 	else DebugPrint("G_AddEvent: %p\n", G_AddEvent);
 
 	//CheckPrivileges = (CheckPrivileges_ptr)PatternSearch((void*)((pint)qagame + 0xB000),
-			0xB0000, PTRN_CHECKPRIVILEGES, MASK_CHECKPRIVILEGES);
-	if (CheckPrivileges == NULL) {
-		DebugPrint("ERROR: Unable to find CheckPrivileges.\n");
-		failed = 1;
-	}
-	else DebugPrint("CheckPrivileges: %p\n", CheckPrivileges);
+//			0xB0000, PTRN_CHECKPRIVILEGES, MASK_CHECKPRIVILEGES);
+//	if (CheckPrivileges == NULL) {
+//		DebugPrint("ERROR: Unable to find CheckPrivileges.\n");
+//		failed = 1;
+//	}
+//	else DebugPrint("CheckPrivileges: %p\n", CheckPrivileges);
 
 	ClientConnect = (ClientConnect_ptr)PatternSearch((void*)((pint)qagame + 0xB000),
 			0xB0000, PTRN_CLIENTCONNECT, MASK_CLIENTCONNECT);
@@ -295,13 +295,13 @@ if (G_AddEvent == NULL) {
 	}
 	else DebugPrint("ClientDisconnect: %p\n", ClientDisconnect);
 
-	ClientSpawn = (ClientSpawn_ptr)PatternSearch((void*)((pint)qagame + 0xB000),
-			0xB0000, PTRN_CLIENTSPAWN, MASK_CLIENTSPAWN);
-	if (ClientSpawn == NULL) {
-		DebugPrint("ERROR: Unable to find ClientSpawn.\n");
-		failed = 1;
-	}
-	else DebugPrint("ClientSpawn: %p\n", ClientSpawn);
+//	ClientSpawn = (ClientSpawn_ptr)PatternSearch((void*)((pint)qagame + 0xB000),
+//			0xB0000, PTRN_CLIENTSPAWN, MASK_CLIENTSPAWN);
+//	if (ClientSpawn == NULL) {
+//		DebugPrint("ERROR: Unable to find ClientSpawn.\n");
+//		failed = 1;
+//	}
+//	else DebugPrint("ClientSpawn: %p\n", ClientSpawn);
 
 	if (failed) {
 			DebugPrint("Exiting.\n");
@@ -309,7 +309,7 @@ if (G_AddEvent == NULL) {
 	}
 
 
-*/
+
 	
 }
 
