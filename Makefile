@@ -1,5 +1,5 @@
 LBITS := $(shell getconf LONG_BIT)
-ifeq ($(LBITS),65)
+ifeq ($(LBITS),64	)
 	CFLAGS += -m64 -fPIC
 	SOURCES = HDE/hde64.c
 	SOURCES_NOPY = HDE/hde64.c

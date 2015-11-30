@@ -50,11 +50,11 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
         DebugPrint("Unknown module: %s\n", moduleName);
     
     Sys_SetModuleOffset(moduleName, offset);
-    //if (common_initialized) {
-    //	SearchVmFunctions();
-    //	HookVm();
-    //	InitializeVm();
-    //}
+    if (common_initialized) {
+    	SearchVmFunctions();
+    	HookVm();
+    	InitializeVm();
+    }
 }
 
 void __cdecl My_G_InitGame(int levelTime, int randomSeed, int restart) {
