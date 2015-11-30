@@ -29,7 +29,6 @@ void __cdecl My_Cmd_AddCommand(char* cmd, void* func) {
 
 void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
     // We should be getting qagame, but check just in case.
-    DebugPrint("Sysmodule in XY...\n");
     if (!strcmp(moduleName, "qagame")) {
         // Despite the name, it's not the actual module, but vmMain.
         // We use dlinfo to get the base of the module so we can properly
@@ -46,18 +45,13 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
         }
         DebugPrint("Got qagame: %#010x\n", qagame);
     }
-    else
-        DebugPrint("Unknown module: %s\n", moduleName);
-    DebugPrint("Sysmodule in...\n");
+    else {   DebugPrint("Unknown module: %s\n", moduleName);}
     Sys_SetModuleOffset(moduleName, offset);
-    DebugPrint("Sysmodule in2...\n");
-    if (common_initialized) {
-        SearchVmFunctions();
-    	DebugPrint("Sysmodule 2...\n");
-    	HookVm();
-    	DebugPrint("Sysmodule 3...\n");
-    	InitializeVm();
-    }
+    //if (common_initialized) {
+    //    SearchVmFunctions();
+    //	HookVm();
+   // 	InitializeVm();
+    //}
 }
 
 void __cdecl My_G_InitGame(int levelTime, int randomSeed, int restart) {
@@ -185,8 +179,8 @@ void __cdecl My_ClientSpawn(gentity_t* ent) {
 
 // Hook static functions. Can be done before program even runs.
 void HookStatic(void) {
-	int res, failed = 0;
-    DebugPrint("Hooking...\n");
+    int res, failed = 0;
+    //DebugPrint("Hooking...\n");
     res = Hook((void*)Cmd_AddCommand, My_Cmd_AddCommand, (void*)&Cmd_AddCommand);
 	if (res) {
 		DebugPrint("ERROR: Failed to hook Cmd_AddCommand: %d\n", res);
