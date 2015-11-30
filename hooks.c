@@ -23,7 +23,7 @@ static void SetTag(void);
 
 void __cdecl My_Cmd_AddCommand(char* cmd, void* func) {
     if (!common_initialized) InitializeStatic();
-    
+
     Cmd_AddCommand(cmd, func);
 }
 
@@ -47,8 +47,8 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
         DebugPrint("Got qagame: %#010x\n", qagame);
     }
     else
-        DebugPrint("Unknown module: %s\n", moduleName);
-    
+    DebugPrint("Unknown module: %s\n", moduleName);
+
     Sys_SetModuleOffset(moduleName, offset);
     if (common_initialized) {
     	SearchVmFunctions();
@@ -172,7 +172,7 @@ char* __cdecl My_ClientConnect(int clientNum, qboolean firstTime, qboolean isBot
 
 void __cdecl My_ClientSpawn(gentity_t* ent) {
     ClientSpawn(ent);
-    
+
     // Since we won't ever stop the real function from being called,
     // we trigger the event after calling the real one. This will allow
     // us to set weapons and such without it getting overriden later.
@@ -184,6 +184,7 @@ void __cdecl My_ClientSpawn(gentity_t* ent) {
 void HookStatic(void) {
 	int res, failed = 0;
     DebugPrint("Hooking...\n");
+    DebugPrint("Hooking2...\n");
     res = Hook((void*)Cmd_AddCommand, My_Cmd_AddCommand, (void*)&Cmd_AddCommand);
 	if (res) {
 		DebugPrint("ERROR: Failed to hook Cmd_AddCommand: %d\n", res);
@@ -243,11 +244,11 @@ void HookStatic(void) {
 	}
 }
 
-/* 
+/*
  * Hooks VM calls. Not all use Hook, since the VM calls are stored in a table of
  * pointers. We simply set our function pointer to the current pointer in the table and
  * then replace the it with our replacement function. Just like hooking a VMT.
- * 
+ *
  * This must be called AFTER Sys_SetModuleOffset, since Sys_SetModuleOffset is called after
  * the VM DLL has been loaded, meaning the pointer we use has been set.
  *
