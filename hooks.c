@@ -33,8 +33,7 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
         // Despite the name, it's not the actual module, but vmMain.
         // We use dlinfo to get the base of the module so we can properly
         // initialize all the pointers relative to the base.
-    	qagame_dllentry = offset;
-
+      	qagame_dllentry = offset;
         Dl_info dlinfo;
         int res = dladdr(offset, &dlinfo);
         if (!res) {
@@ -50,9 +49,9 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
         DebugPrint("Unknown module: %s\n", moduleName);
     DebugPrint("Sysmodule in...\n");
     Sys_SetModuleOffset(moduleName, offset);
+    DebugPrint("Sysmodule in2...\n");
     if (common_initialized) {
-        DebugPrint("Sysmodule 1...\n");
-    	SearchVmFunctions();
+        SearchVmFunctions();
     	DebugPrint("Sysmodule 2...\n");
     	HookVm();
     	DebugPrint("Sysmodule 3...\n");
