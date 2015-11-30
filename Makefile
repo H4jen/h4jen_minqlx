@@ -1,5 +1,5 @@
 LBITS := $(shell getconf LONG_BIT)
-ifeq ($(LBITS),64	)
+ifeq ($(LBITS),64)
 	CFLAGS += -m64 -fPIC
 	SOURCES = HDE/hde64.c
 	SOURCES_NOPY = HDE/hde64.c
@@ -9,7 +9,7 @@ else
 	SOURCES_NOPY =  HDE/hde32.c
 endif
 
-BINDIR = bin
+BINDIR = /home/barbapappa/steamcmd/steamapps/common/qlds/
 CC = gcc
 CFLAGS += -shared -std=gnu11
 LDFLAGS_NOPY += -ldl
