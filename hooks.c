@@ -47,12 +47,15 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
         DebugPrint("Got qagame: %#010x\n", qagame);
     }
     else
-    DebugPrint("Unknown module: %s\n", moduleName);
-
+        DebugPrint("Unknown module: %s\n", moduleName);
+    DebugPrint("Sysmodule in...\n");
     Sys_SetModuleOffset(moduleName, offset);
     if (common_initialized) {
+        DebugPrint("Sysmodule 1...\n");
     	SearchVmFunctions();
+    	DebugPrint("Sysmodule 2...\n");
     	HookVm();
+    	DebugPrint("Sysmodule 3...\n");
     	InitializeVm();
     }
 }
@@ -184,7 +187,6 @@ void __cdecl My_ClientSpawn(gentity_t* ent) {
 void HookStatic(void) {
 	int res, failed = 0;
     DebugPrint("Hooking...\n");
-    DebugPrint("Hooking2...\n");
     res = Hook((void*)Cmd_AddCommand, My_Cmd_AddCommand, (void*)&Cmd_AddCommand);
 	if (res) {
 		DebugPrint("ERROR: Failed to hook Cmd_AddCommand: %d\n", res);
