@@ -29,6 +29,7 @@ void __cdecl My_Cmd_AddCommand(char* cmd, void* func) {
 
 void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
     // We should be getting qagame, but check just in case.
+    DebugPrint("Sysmodule in XY...\n");
     if (!strcmp(moduleName, "qagame")) {
         // Despite the name, it's not the actual module, but vmMain.
         // We use dlinfo to get the base of the module so we can properly
