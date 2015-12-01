@@ -46,12 +46,20 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
         DebugPrint("Got qagame: %#010x\n", qagame);
     }
     else {   DebugPrint("Unknown module: %s\n", moduleName);}
-    Sys_SetModuleOffset(moduleName, offset);
-    //if (common_initialized) {
-    //    SearchVmFunctions();
-    //	HookVm();
-   // 	InitializeVm();
-    //}
+    //Sys_SetModuleOffset(moduleName, offset);
+
+    if (common_initialized) {
+        DebugPrint("Inside IF loop\n",qagame);
+	SearchVmFunctions();
+	int i = 0;
+	i=i+1;
+	DebugPrint("NINJA\n");
+    	HookVm();
+     	//InitializeVm();
+    }
+   DebugPrint("Trying \n",qagame);
+   Sys_SetModuleOffset(moduleName, offset);
+
 }
 
 void __cdecl My_G_InitGame(int levelTime, int randomSeed, int restart) {
@@ -180,9 +188,9 @@ void __cdecl My_ClientSpawn(gentity_t* ent) {
 // Hook static functions. Can be done before program even runs.
 void HookStatic(void) {
     int res, failed = 0;
-    //DebugPrint("Hooking...\n");
+    DebugPrint("Hooking...\n");
     res = Hook((void*)Cmd_AddCommand, My_Cmd_AddCommand, (void*)&Cmd_AddCommand);
-	if (res) {
+   	if (res) {
 		DebugPrint("ERROR: Failed to hook Cmd_AddCommand: %d\n", res);
 		failed = 1;
 	}

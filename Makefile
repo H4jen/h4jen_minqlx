@@ -34,7 +34,7 @@ debug: version_debug $(OUTPUT)
 	@python3.5 python/version.py -unset_debug
 	@echo Done!
 
-nopy: CFLAGS += -Wall -DNOPY
+nopy: CFLAGS += -Wall -DNOPY -O0
 nopy: $(OUTPUT_NOPY)
 	@echo Done!
 
