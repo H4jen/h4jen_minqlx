@@ -35,6 +35,7 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
         // We use dlinfo to get the base of the module so we can properly
         // initialize all the pointers relative to the base.
       	qagame_dllentry = offset;
+        DebugPrint("Got gagame_dllentry: %p\n", qagame_dllentry);
         Dl_info dlinfo;
         int res = dladdr(offset, &dlinfo);
         if (!res) {
@@ -47,18 +48,19 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
         DebugPrint("Got qagame: %#010x\n", qagame);
     }
     else {   DebugPrint("Unknown module: %s\n", moduleName);}
-    //Sys_SetModuleOffset(moduleName, offset);
+    
     sleep(1);
     Sys_SetModuleOffset(moduleName, offset);
 
     if (common_initialized) {
         DebugPrint("Inside IF loop\n",qagame);
 	SearchVmFunctions();
-	DebugPrint("NINJA\n");
+	//sleep(3);
+	//DebugPrint("NINJA\n");
     	HookVm();
      	//InitializeVm();
     }
-   DebugPrint("Trying \n",qagame);
+   //DebugPrint("Trying \n",qagame);
 //   Sys_SetModuleOffset(moduleName, offset);
 
 }
@@ -249,7 +251,7 @@ void HookStatic(void) {
 	}
 }
 
-/*
+ /*
  * Hooks VM calls. Not all use Hook, since the VM calls are stored in a table of
  * pointers. We simply set our function pointer to the current pointer in the table and
  * then replace the it with our replacement function. Just like hooking a VMT.
@@ -260,43 +262,45 @@ void HookStatic(void) {
  * PROTIP: If you can, ALWAYS use VM_Call table hooks instead of using Hook().
 */
 void HookVm(void) {
+    //sleep(0);
     DebugPrint("Hooking VM functions...\n");
 
 #if defined(__x86_64__) || defined(_M_X64)
     pint vm_call_table = *(int32_t*)OFFSET_RELP_VM_CALL_TABLE + OFFSET_RELP_VM_CALL_TABLE + 4;
 #elif defined(__i386) || defined(_M_IX86)
-    pint vm_call_table = *(int32_t*)OFFSET_RELP_VM_CALL_TABLE + 0xCAFF4 + (pint)qagame;
+  //  pint vm_call_table = *(int32_t*)OFFSET_RELP_VM_CALL_TABLE;     
+  pint vm_call_table = *(int32_t*)(pint)(qagame+0xce940);
 #endif
 
 	DebugPrint("Got qagame: %p\n", qagame);
 	DebugPrint("G_Initgame_pointer:  %p\n", (vm_call_table + RELOFFSET_VM_CALL_INITGAME));
- 	DebugPrint("VM_calltable:  %p\n", (vm_call_table));
-	G_InitGame = *(G_InitGame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_INITGAME);
-	*(void**)(vm_call_table + RELOFFSET_VM_CALL_INITGAME) = My_G_InitGame;
+	DebugPrint("VM_calltable:  %p\n", (vm_call_table));
+//	G_InitGame = *(G_InitGame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_INITGAME);
+//	*(void**)(vm_call_table + RELOFFSET_VM_CALL_INITGAME) = My_G_InitGame;
 
-	G_RunFrame = *(G_RunFrame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_RUNFRAME);
+//	G_RunFrame = *(G_RunFrame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_RUNFRAME);
 
-#ifndef NOPY
-	*(void**)(vm_call_table + RELOFFSET_VM_CALL_RUNFRAME) = My_G_RunFrame;
+//#ifndef NOPY
+//	*(void**)(vm_call_table + RELOFFSET_VM_CALL_RUNFRAME) = My_G_RunFrame;
 
-	int res, failed = 0;
-	res = Hook((void*)ClientConnect, My_ClientConnect, (void*)&ClientConnect);
-	if (res) {
-		DebugPrint("ERROR: Failed to hook ClientConnect: %d\n", res);
-		failed = 1;
-	}
+//	int res, failed = 0;
+	//res = Hook((void*)ClientConnect, My_ClientConnect, (void*)&ClientConnect);
+	//if (res) {
+	//	DebugPrint("ERROR: Failed to hook ClientConnect: %d\n", res);
+//		failed = 1;
+//	}
 
-    res = Hook((void*)ClientSpawn, My_ClientSpawn, (void*)&ClientSpawn);
-    if (res) {
-        DebugPrint("ERROR: Failed to hook ClientSpawn: %d\n", res);
-        failed = 1;
-    }
+//    res = Hook((void*)ClientSpawn, My_ClientSpawn, (void*)&ClientSpawn);
+ //   if (res) {
+  //      DebugPrint("ERROR: Failed to hook ClientSpawn: %d\n", res);
+   //     failed = 1;
+  //  }
 
-	if (failed) {
-		DebugPrint("Exiting.\n");
-		exit(1);
-	}
-#endif
+//	if (failed) {
+//		DebugPrint("Exiting.\n");
+//		exit(1);
+//	}
+//#endif
 }
 
 

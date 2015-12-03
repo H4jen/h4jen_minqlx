@@ -96,7 +96,7 @@
 #define OFFSET_RELP_CMD_ARGC ((pint)SV_Map_f + 0x8A)
 
 // qagame structs and global varaibles.
-#define OFFSET_RELP_VM_CALL_TABLE    ((pint)qagame_dllentry + 0x3)
+#define OFFSET_RELP_VM_CALL_TABLE    ((pint)qagame_dllentry +0x50840)
 #define OFFSET_RELP_G_ENTITIES       ((pint)G_RunFrame + 0x143)
 
 // Structs.
