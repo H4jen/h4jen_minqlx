@@ -358,7 +358,7 @@ void InitializeVm(void) {
 	DebugPrint("OFFSET_G_ENTITES: %p\n",OFFSET_RELP_G_ENTITIES);
 	DebugPrint("OFFSET_G_ENTITESandpointer: %p\n",OFFSET_RELP_G_ENTITIES+(int32_t*)OFFSET_RELP_G_ENTITIES+4);
 	DebugPrint("G_ENTITES_pointer: %p\n",(*(int32_t*)OFFSET_RELP_G_ENTITIES));	
-	DebugPrint("In Total: %p\n",((int32_t*)OFFSET_RELP_G_ENTITIES + OFFSET_RELP_G_ENTITIES + 4));
+	DebugPrint("In Total: %p\n",(*(int32_t*)OFFSET_RELP_G_ENTITIES + OFFSET_RELP_G_ENTITIES + 4));
 }
 
 // Called after the game is initialized.
