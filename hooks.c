@@ -265,6 +265,7 @@ void HookVm(void) {
     //sleep(0);
     DebugPrint("Hooking VM functions...\n");
 
+   	//Get the adress of the vm_call_table 
 #if defined(__x86_64__) || defined(_M_X64)
     pint vm_call_table = *(int32_t*)OFFSET_RELP_VM_CALL_TABLE + OFFSET_RELP_VM_CALL_TABLE + 4;
 #elif defined(__i386) || defined(_M_IX86) 
@@ -274,34 +275,38 @@ void HookVm(void) {
 	DebugPrint("Got qagame: %p\n", qagame);
 	DebugPrint("VM_calltable:  %p\n", (vm_call_table));
 		
+	//Get the adress of G_Initgame function
 	G_InitGame = *(G_InitGame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_INITGAME);
         DebugPrint("G_Initgame_pointer:  %p\n", (vm_call_table + RELOFFSET_VM_CALL_INITGAME));
 
-//	*(void**)(vm_call_table + RELOFFSET_VM_CALL_INITGAME) = My_G_InitGame;
+	//Hook the G_initgame function to my_init_game
+	*(void**)(vm_call_table + RELOFFSET_VM_CALL_INITGAME) = My_G_InitGame;
 
-//	G_RunFrame = *(G_RunFrame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_RUNFRAME);
+	//Get the adress of G_RunFrame function
+	G_RunFrame = *(G_RunFrame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_RUNFRAME);
+	DebugPrint("G_RunFram_pointer:  %p\n", (vm_call_table + RELOFFSET_VM_CALL_RUNFRAME));
 
-//#ifndef NOPY
-//	*(void**)(vm_call_table + RELOFFSET_VM_CALL_RUNFRAME) = My_G_RunFrame;
+	#ifndef NOPY
+	*(void**)(vm_call_table + RELOFFSET_VM_CALL_RUNFRAME) = My_G_RunFrame;
 
-//	int res, failed = 0;
-	//res = Hook((void*)ClientConnect, My_ClientConnect, (void*)&ClientConnect);
+	int res, failed = 0;
+	res = Hook((void*)ClientConnect, My_ClientConnect, (void*)&ClientConnect);
 	//if (res) {
 	//	DebugPrint("ERROR: Failed to hook ClientConnect: %d\n", res);
-//		failed = 1;
-//	}
+	//	failed = 1;
+	//}
 
-//    res = Hook((void*)ClientSpawn, My_ClientSpawn, (void*)&ClientSpawn);
- //   if (res) {
-  //      DebugPrint("ERROR: Failed to hook ClientSpawn: %d\n", res);
-   //     failed = 1;
-  //  }
+    //res = Hook((void*)ClientSpawn, My_ClientSpawn, (void*)&ClientSpawn);
+    //if (res) {
+    //    DebugPrint("ERROR: Failed to hook ClientSpawn: %d\n", res);
+    //    failed = 1;
+    //}
 
-//	if (failed) {
-//		DebugPrint("Exiting.\n");
-//		exit(1);
-//	}
-//#endif
+	//if (failed) {
+	//	DebugPrint("Exiting.\n");
+	//	exit(1);
+	//}
+#endif
 }
 
 

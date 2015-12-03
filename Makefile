@@ -29,8 +29,8 @@ all: version $(OUTPUT) $(PYMODULE)
 	@python3.5 python/version.py -unset
 	@echo Done!
 
-debug: CFLAGS += $(shell python3.5-config --includes) -gdwarf-2 -Wall -O0 -fvar-tracking
-debug: version_debug $(OUTPUT)
+debug: CFLAGS +=  $(shell python3.5-config --cflags) -gdwarf-2 -Wall -O0 -fvar-tracking
+debug: version_debug $(OUTPUT) $(PYMODULE)
 	@python3.5 python/version.py -unset_debug
 	@echo Done!
 
