@@ -267,15 +267,16 @@ void HookVm(void) {
 
 #if defined(__x86_64__) || defined(_M_X64)
     pint vm_call_table = *(int32_t*)OFFSET_RELP_VM_CALL_TABLE + OFFSET_RELP_VM_CALL_TABLE + 4;
-#elif defined(__i386) || defined(_M_IX86)
-  //  pint vm_call_table = *(int32_t*)OFFSET_RELP_VM_CALL_TABLE;     
-  pint vm_call_table = *(int32_t*)(pint)(qagame+0xce940);
+#elif defined(__i386) || defined(_M_IX86) 
+    pint vm_call_table = (int32_t*)(qagame+OFFSET_VM_CALL_TABLE);
 #endif
 
 	DebugPrint("Got qagame: %p\n", qagame);
-	DebugPrint("G_Initgame_pointer:  %p\n", (vm_call_table + RELOFFSET_VM_CALL_INITGAME));
 	DebugPrint("VM_calltable:  %p\n", (vm_call_table));
-//	G_InitGame = *(G_InitGame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_INITGAME);
+		
+	G_InitGame = *(G_InitGame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_INITGAME);
+        DebugPrint("G_Initgame_pointer:  %p\n", (vm_call_table + RELOFFSET_VM_CALL_INITGAME));
+
 //	*(void**)(vm_call_table + RELOFFSET_VM_CALL_INITGAME) = My_G_InitGame;
 
 //	G_RunFrame = *(G_RunFrame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_RUNFRAME);
