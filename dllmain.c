@@ -354,9 +354,8 @@ void InitializeVm(void) {
     level = (level_locals_t*)(*(int32_t*)OFFSET_RELP_LEVEL + OFFSET_RELP_LEVEL + 4);
     DebugPrint("G_entities_pointer: %p\n",(*(int32_t*)OFFSET_RELP_G_ENTITIES + OFFSET_RELP_G_ENTITIES + 4));
 
-
 #elif defined(__i386) || defined(_M_IX86)
-    g_entities = (gentity_t*)((int32_t*)OFFSET_RELP_G_ENTITIES + (pint)qagame);
+    //g_entities = (gentity_t*)((int32_t*)OFFSET_RELP_G_ENTITIES + (pint)qagame);
     DebugPrint("OFFSET_G_ENTITES: %p\n",OFFSET_RELP_G_ENTITIES);
     DebugPrint("G_entities_pointer: %p\n",((int32_t*)(OFFSET_RELP_G_ENTITIES + (pint)qagame)));
 #endif
@@ -365,7 +364,7 @@ void InitializeVm(void) {
 // Called after the game is initialized.
 void InitializeCvars(void) {
     sv_maxclients = Cvar_FindVar("sv_maxclients");
-    
+    DebugPrint("sv_maxclient: %p\n",sv_maxclients);    
     cvars_initialized = 1;
 }
 
@@ -380,7 +379,7 @@ void EntryPoint(void) {
 	// might use some of the functions that could be hooked later to
 	// get the pointer, such as SV_SetConfigstring.
 #if defined(__x86_64__) || defined(_M_X64)
-	sv = (server_t*)(*(int32_t*)OFFSET_RELP_SV + OFFSET_RELP_SV + 5);
+   sv = (server_t*)(*(int32_t*)OFFSET_RELP_SV + OFFSET_RELP_SV + 5);
     // 32-bit pointer. intptr_t added to suppress warning about the casting.
     svs = (serverStatic_t*)(intptr_t)(*(uint32_t*)OFFSET_PP_SVS);
 #elif defined(__i386) || defined(_M_IX86)
