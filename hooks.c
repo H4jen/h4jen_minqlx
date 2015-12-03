@@ -58,7 +58,7 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
 	//sleep(3);
 	//DebugPrint("NINJA\n");
     	HookVm();
-     	//InitializeVm();
+     	InitializeVm();
     }
    //DebugPrint("Trying \n",qagame);
 //   Sys_SetModuleOffset(moduleName, offset);
@@ -291,21 +291,21 @@ void HookVm(void) {
 
 	int res, failed = 0;
 	res = Hook((void*)ClientConnect, My_ClientConnect, (void*)&ClientConnect);
-	//if (res) {
-	//	DebugPrint("ERROR: Failed to hook ClientConnect: %d\n", res);
-	//	failed = 1;
-	//}
+	if (res) {
+		DebugPrint("ERROR: Failed to hook ClientConnect: %d\n", res);
+		failed = 1;
+	}
 
-    //res = Hook((void*)ClientSpawn, My_ClientSpawn, (void*)&ClientSpawn);
-    //if (res) {
-    //    DebugPrint("ERROR: Failed to hook ClientSpawn: %d\n", res);
-    //    failed = 1;
-    //}
+    res = Hook((void*)ClientSpawn, My_ClientSpawn, (void*)&ClientSpawn);
+    if (res) {
+        DebugPrint("ERROR: Failed to hook ClientSpawn: %d\n", res);
+        failed = 1;
+    }
 
-	//if (failed) {
-	//	DebugPrint("Exiting.\n");
-	//	exit(1);
-	//}
+	if (failed) {
+		DebugPrint("Exiting.\n");
+		exit(1);
+	}
 #endif
 }
 

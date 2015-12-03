@@ -271,13 +271,13 @@ void SearchVmFunctions(void) {
 	}
 	else DebugPrint("G_AddEvent: %p\n", G_AddEvent);
 
-	//CheckPrivileges = (CheckPrivileges_ptr)PatternSearch((void*)((pint)qagame + 0xB000),
-//			0xB0000, PTRN_CHECKPRIVILEGES, MASK_CHECKPRIVILEGES);
-//	if (CheckPrivileges == NULL) {
-//		DebugPrint("ERROR: Unable to find CheckPrivileges.\n");
-//		failed = 1;
-//	}
-//	else DebugPrint("CheckPrivileges: %p\n", CheckPrivileges);
+	CheckPrivileges = (CheckPrivileges_ptr)PatternSearch((void*)((pint)qagame + 0xB000),
+			0xB0000, PTRN_CHECKPRIVILEGES, MASK_CHECKPRIVILEGES);
+	if (CheckPrivileges == NULL) {
+		DebugPrint("ERROR: Unable to find CheckPrivileges.\n");
+		failed = 1;
+	}
+	else DebugPrint("CheckPrivileges: %p\n", CheckPrivileges);
 
 	ClientConnect = (ClientConnect_ptr)PatternSearch((void*)((pint)qagame + 0xB000),
 			0xB0000, PTRN_CLIENTCONNECT, MASK_CLIENTCONNECT);
@@ -295,13 +295,13 @@ void SearchVmFunctions(void) {
 	}
 	else DebugPrint("ClientDisconnect: %p\n", ClientDisconnect);
 
-//	ClientSpawn = (ClientSpawn_ptr)PatternSearch((void*)((pint)qagame + 0xB000),
-//			0xB0000, PTRN_CLIENTSPAWN, MASK_CLIENTSPAWN);
-//	if (ClientSpawn == NULL) {
-//		DebugPrint("ERROR: Unable to find ClientSpawn.\n");
-//		failed = 1;
-//	}
-//	else DebugPrint("ClientSpawn: %p\n", ClientSpawn);
+	ClientSpawn = (ClientSpawn_ptr)PatternSearch((void*)((pint)qagame + 0xB000),
+			0xB0000, PTRN_CLIENTSPAWN, MASK_CLIENTSPAWN);
+	if (ClientSpawn == NULL) {
+		DebugPrint("ERROR: Unable to find ClientSpawn.\n");
+		failed = 1;
+	}
+	else DebugPrint("ClientSpawn: %p\n", ClientSpawn);
 
 	if (failed) {
 			DebugPrint("Exiting.\n");
@@ -355,6 +355,9 @@ void InitializeVm(void) {
 #elif defined(__i386) || defined(_M_IX86)
     g_entities = (gentity_t*)(*(int32_t*)OFFSET_RELP_G_ENTITIES + 0xCAFF4 + (pint)qagame);
 #endif
+	DebugPrint("OFFSET_G_ENTITES: %p\n",OFFSET_RELP_G_ENTITIES);
+	DebugPrint("OFFSET_G_ENTITES: %p\n",OFFSET_RELP_G_ENTITIES+OFFSET_RELP_G_ENTITIES+4);
+	
 }
 
 // Called after the game is initialized.
