@@ -356,8 +356,8 @@ void InitializeVm(void) {
     g_entities = (gentity_t*)(*(int32_t*)OFFSET_RELP_G_ENTITIES + 0xCAFF4 + (pint)qagame);
 #endif
 	DebugPrint("OFFSET_G_ENTITES: %p\n",OFFSET_RELP_G_ENTITIES);
-	DebugPrint("OFFSET_G_ENTITES: %p\n",OFFSET_RELP_G_ENTITIES+OFFSET_RELP_G_ENTITIES+4);
-	
+	DebugPrint("OFFSET_G_ENTITESandpointer: %p\n",OFFSET_RELP_G_ENTITIES+(int32_t*)OFFSET_RELP_G_ENTITIES+4);
+	DebugPrint("G_ENTITES_pointer: %p\n",(int32_t*)OFFSET_RELP_G_ENTITIES);	
 }
 
 // Called after the game is initialized.
