@@ -352,11 +352,14 @@ void InitializeVm(void) {
 #if defined(__x86_64__) || defined(_M_X64)
     g_entities = (gentity_t*)(*(int32_t*)OFFSET_RELP_G_ENTITIES + OFFSET_RELP_G_ENTITIES + 4);
     level = (level_locals_t*)(*(int32_t*)OFFSET_RELP_LEVEL + OFFSET_RELP_LEVEL + 4);
+    DebugPrint("G_entities_pointer: %p\n",(*(int32_t*)OFFSET_RELP_G_ENTITIES + OFFSET_RELP_G_ENTITIES + 4));
+
+
 #elif defined(__i386) || defined(_M_IX86)
     g_entities = (gentity_t*)((int32_t*)OFFSET_RELP_G_ENTITIES + (pint)qagame);
-#endif
     DebugPrint("OFFSET_G_ENTITES: %p\n",OFFSET_RELP_G_ENTITIES);
     DebugPrint("G_entities_pointer: %p\n",((int32_t*)(OFFSET_RELP_G_ENTITIES + (pint)qagame)));
+#endif
 }
 
 // Called after the game is initialized.
