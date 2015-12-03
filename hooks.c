@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <dlfcn.h>
+#include <unistd.h>
 
 #include "patterns.h"
 #include "common.h"
@@ -47,18 +48,18 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
     }
     else {   DebugPrint("Unknown module: %s\n", moduleName);}
     //Sys_SetModuleOffset(moduleName, offset);
+    sleep(1);
+    Sys_SetModuleOffset(moduleName, offset);
 
     if (common_initialized) {
         DebugPrint("Inside IF loop\n",qagame);
 	SearchVmFunctions();
-	int i = 0;
-	i=i+1;
 	DebugPrint("NINJA\n");
     	HookVm();
      	//InitializeVm();
     }
    DebugPrint("Trying \n",qagame);
-   Sys_SetModuleOffset(moduleName, offset);
+//   Sys_SetModuleOffset(moduleName, offset);
 
 }
 
@@ -267,6 +268,9 @@ void HookVm(void) {
     pint vm_call_table = *(int32_t*)OFFSET_RELP_VM_CALL_TABLE + 0xCAFF4 + (pint)qagame;
 #endif
 
+	DebugPrint("Got qagame: %p\n", qagame);
+	DebugPrint("G_Initgame_pointer:  %p\n", (vm_call_table + RELOFFSET_VM_CALL_INITGAME));
+ 	DebugPrint("VM_calltable:  %p\n", (vm_call_table));
 	G_InitGame = *(G_InitGame_ptr*)(vm_call_table + RELOFFSET_VM_CALL_INITGAME);
 	*(void**)(vm_call_table + RELOFFSET_VM_CALL_INITGAME) = My_G_InitGame;
 

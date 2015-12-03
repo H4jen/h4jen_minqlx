@@ -9,7 +9,7 @@ else
 	SOURCES_NOPY =  HDE/hde32.c
 endif
 
-BINDIR = /home/barbapappa/steamcmd/steamapps/common/qlds/
+BINDIR = bin
 CC = gcc
 CFLAGS += -shared -std=gnu11
 LDFLAGS_NOPY += -ldl
