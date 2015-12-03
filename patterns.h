@@ -98,7 +98,7 @@
 // qagame structs and global varaibles.
 //#define OFFSET_RELP_VM_CALL_TABLE    ((pint)qagame_dllentry +0x50840)
 #define OFFSET_VM_CALL_TABLE ((pint) 0xCE940)
-#define OFFSET_RELP_G_ENTITIES       ((pint)G_RunFrame + 0x143)
+#define OFFSET_RELP_G_ENTITIES    ((pint) 0x4FCBE0)
 
 // Structs.
 #define OFFSET_PP_SVS     ((pint)SV_Shutdown + 0xA0)

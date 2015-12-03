@@ -55,14 +55,9 @@ void __cdecl My_Sys_SetModuleOffset(char* moduleName, void* offset) {
     if (common_initialized) {
         DebugPrint("Inside IF loop\n",qagame);
 	SearchVmFunctions();
-	//sleep(3);
-	//DebugPrint("NINJA\n");
-    	HookVm();
+	HookVm();
      	InitializeVm();
     }
-   //DebugPrint("Trying \n",qagame);
-//   Sys_SetModuleOffset(moduleName, offset);
-
 }
 
 void __cdecl My_G_InitGame(int levelTime, int randomSeed, int restart) {
@@ -179,8 +174,11 @@ char* __cdecl My_ClientConnect(int clientNum, qboolean firstTime, qboolean isBot
 }
 
 void __cdecl My_ClientSpawn(gentity_t* ent) {
+    
+    DebugPrint("Client is spawning...\n");
+    sleep(2);
     ClientSpawn(ent);
-
+    
     // Since we won't ever stop the real function from being called,
     // we trigger the event after calling the real one. This will allow
     // us to set weapons and such without it getting overriden later.
